@@ -1,0 +1,35 @@
+-var bemBlockStack = []
+-var bemCurrentBlockName = ''
+
+mixin b_(tag, ext)
+  -var classNames = attributes.class
+  -var blockName = 'b-' + classNames.slice(0, 1)[0]
+  -if (ext && typeof ext === 'string') ext = ext.split('|')
+  -var tag = tag || 'div'
+  -var tagAttr = tag.split('|')
+  -if (!ext) ext = tagAttr.slice(1)
+  -tag = tagAttr[0]
+  -bemBlockStack.push(bemCurrentBlockName = blockName)
+  -attributes.class = classNames.slice(1).join(' ').replace(/\b_/g, blockName + '_')
+  -attributes.class = blockName + ' ' + attributes.class + ' ' + ext.join(' ')
+  #{tag}(attributes)
+    block
+
+mixin b_pop
+  -bemBlockStack.pop()
+  -bemCurrentBlockName = bemBlockStack.length ? bemBlockStack[bemBlockStack.length - 1] : ''
+
+mixin e_(tag, ext)
+  -var classNames = attributes.class
+  -var elementName = bemCurrentBlockName + '__' + classNames.slice(0, 1)[0]
+  -if (ext && typeof ext === 'string') ext = ext.split('|')
+  -var tag = tag || 'div'
+  -var tagAttr = tag.split('|')
+  -if (!ext) ext = tagAttr.slice(1)
+  -tag = tagAttr[0]
+  -attributes.class = classNames.slice(1).join(' ').replace(/\b_/g, elementName + '_')
+  -attributes.class = elementName + ' ' + attributes.class + ' ' + ext.join(' ')
+  #{tag}(attributes)
+    block
+
+include shortcuts/common
