@@ -47,12 +47,12 @@
 
 Рассмотрим простой пример:
 
-  +b_.greeting
-    +e_(span).username._mod_val.simple-class !{username}
-    +b_.goodbye
-      +e_(button).logout Logout
+    +b_.greeting
+      +e_(span).username._mod_val.simple-class !{username}
+      +b_.goodbye
+        +e_(button).logout Logout
+      +b_pop
     +b_pop
-  +b_pop
 
 В итоге получаем верстку:
 
